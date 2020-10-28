@@ -7,10 +7,13 @@ Functionalities:
 5) Registration ID is Mandatory and Name, EMail ID are kept as optional
 
 How to Run:
-1) Download the RWebApp Folder Contents and Open the app.R file in R Studio and Use Run App Option
+1) Download the Project/or clone it
+2) Go to RWebApp Folder and Open the app.R file in R Studio
+3) Use Run App Option
 
 Prerequisites:
-1) Shiny
+1) R, RStudio
+2) Shiny(R Package)
 
 Running Instances of App:
 We have also deployed this code in to shinyapps.io below is the link
