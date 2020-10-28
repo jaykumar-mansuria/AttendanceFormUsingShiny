@@ -19,22 +19,23 @@ epochTime <- function() {
   return(as.integer(Sys.time()))
 }
 
-# get a formatted string of the timestamp (exclude colons as they are invalid
-# characters in Windows filenames)
+# get a formatted string of the timestamp human format YYYYMMDD_HHMMSS
 humanTime <- function() {
   format(Sys.time(), "%Y%m%d%_%H%M%OS")
 }
 
-humanTime2 <- function() {
-  if( Sys.timezone()=="Asia/Calcutta")
-  {
-    x = format(Sys.time(), "%d-%m-%y %H:%M:%OS")
-  }
-  else{
-    x = format(Sys.time()+5.5*60*60, "%d-%m-%y %H:%M:%OS")
-  }
-  return(x)
+timezonefactor <- function() {
+  if( Sys.timezone()=="Asia/Calcutta") return(0) else return(5.5*60*60)
 }
+
+humanTime2 <- function() {
+   format(Sys.time()+timezonefactor(), "%d-%m-%y %H:%M:%OS")
+}
+
+humanTime3 <- function() {
+  format(Sys.time()+timezonefactor(), "%y%m%d")
+}
+
 regExists <- function(data) {
   reg_ids = loadData()$Registration_ID
   data_exists =c(data[3]) %in% reg_ids
@@ -46,28 +47,33 @@ saveData <- function(data) {
   fileName <- sprintf("%s.csv",humanTime())
   data_exists=regExists(data)
   if(data_exists){
-      shinyjs::show("exists_msg") 
-      shinyjs::hide("submit_msg")
-      shinyjs::hide("thankyou_msg")
+      shinyjs::show("exists_msg")
       }
   else{
-    write.csv(x = data, file = file.path(responsesDir, fileName),
+    write.csv(x = data, file = file.path(responsesDir(), fileName),
               row.names = FALSE, quote = TRUE)
+    
+    shinyjs::show("thankyou_msg")
   }
   
 }
 
 # load all responses into a data.frame
 loadData <- function() {
-  files <- list.files(file.path(responsesDir), full.names = TRUE)
+  files <- list.files(file.path(responsesDir()), full.names = TRUE)
   data <- lapply(files, read.csv, stringsAsFactors = FALSE)
   #data <- dplyr::rbind_all(data)
   data <- do.call(rbind, data)
   data
 }
-
 # directory where responses get stored
-responsesDir <- file.path("responses")
+responsesDir <- function() {
+  res_path = file.path("responses",humanTime3())
+  dir.create(res_path, recursive = TRUE, showWarnings = FALSE)
+  print(res_path)
+  return(res_path)
+}
+
 
 # CSS to use in the app
 appCSS <-
@@ -167,7 +173,6 @@ shinyApp(
       tryCatch({
         shinyjs::reset("form")
         shinyjs::hide("form")
-        shinyjs::show("thankyou_msg")
         saveData(formData())
       },
       error = function(err) {
