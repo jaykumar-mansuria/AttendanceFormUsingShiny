@@ -1,7 +1,19 @@
 # AttendanceFormUsingShiny
 Functionalities:
 1) Using this Students Can Submit thier Attendance
-2) Can see the Live Dashboard of users you have submitted the Attendance.
+2) Can see the Live Dashboard of users you have submitted the Attendance
 3) Attendance Day Refreshes Per Day
 4) Duplicate Submission of Attendance is not allowed
 5) Registration ID is Mandatory and Name, EMail ID are kept as optional
+
+How to Run:
+1) Download the RWebApp Folder Contents and Open the app.R file in R Studio and Use Run App Option
+
+Prerequisites:
+1) Shiny
+
+Running Instances of App:
+We have also deployed this code in to shinyapps.io below is the link
+
+https://jay-kumar-patel-19mia1032.shinyapps.io/rwebapp/
+
