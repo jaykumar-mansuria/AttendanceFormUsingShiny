@@ -70,7 +70,6 @@ loadData <- function() {
 responsesDir <- function() {
   res_path = file.path("responses",humanTime3())
   dir.create(res_path, recursive = TRUE, showWarnings = FALSE)
-  print(res_path)
   return(res_path)
 }
 
