@@ -98,7 +98,7 @@ shinyApp(
         h1("Attendance Form using Shiny"),
         strong( 
           span("Created by "),
-          a("Jaykumar")
+          a("Jaykumar", href="https://github.com/jaykumar-mansuria/AttendanceFormUsingShiny")
         )
     ),
     
